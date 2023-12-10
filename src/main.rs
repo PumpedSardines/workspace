@@ -1,6 +1,3 @@
-use std::ffi::OsString;
-use std::path::PathBuf;
-
 use clap::{arg, Command};
 
 mod nix;
