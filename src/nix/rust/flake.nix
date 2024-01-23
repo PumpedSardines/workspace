@@ -20,7 +20,7 @@
       in
       {
         packages.default = pkgsFor.${system}.callPackage ./default.nix { };
-        devShells = pkgsFor.${system}.callPackage ./shell.nix { };
+        devShells.default = pkgsFor.${system}.callPackage ./shell.nix { };
       }
     );
 }
