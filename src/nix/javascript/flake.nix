@@ -4,22 +4,28 @@
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flakeUtils.url = "github:numtide/flake-utils";
   };
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgsUnstable
-    , flakeUtils
-    ,
-    }:
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgsUnstable,
+    flakeUtils,
+  }:
     flakeUtils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         pkgs = nixpkgs.legacyPackages.${system};
         pkgsUnstable = nixpkgsUnstable.legacyPackages.${system};
         pkgsFor = nixpkgs.legacyPackages;
-      in
-      {
-        devShells = pkgsFor.${system}.callPackage ./shell.nix { };
+      in {
+        packages = flakeUtils.lib.flattenTree {
+          node = pkgs.nodejs_20;
+          live-server = pkgs.nodePackages.live-server;
+        };
+        devShell = pkgs.mkShell {
+          buildInputs = with self.packages.${system}; [
+            node
+            live-server
+          ];
+        };
       }
     );
 }
