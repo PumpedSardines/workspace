@@ -1,8 +1,5 @@
 use clap::{arg, Command};
 
-mod nix;
-mod workspaces;
-
 fn cli() -> Command {
     Command::new("workspace")
         .about("Manages workspaces")
@@ -36,16 +33,22 @@ fn cli() -> Command {
         )
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let matches = cli().get_matches();
+
+    // let db_url = &env::var("DATABASE_URL").expect("There is no DATABASE_URL env variable");
+    // let pool = SqlitePool::connect(db_url)
+    //     .await
+    //     .expect("Couldn't connect to the sqlite db");
 
     match matches.subcommand() {
         Some(("nix", sub_matches)) => {
             let template = sub_matches.get_one::<String>("template").unwrap();
-            nix::parse_cmd(template);
+            workspace::nix::parse_cmd(template);
         }
         Some(("list", _)) => {
-            let workspaces = workspaces::load();
+            let workspaces = workspace::paths::legacy::load();
             if workspaces.is_empty() {
                 println!("No workspaces made");
                 std::process::exit(0);
@@ -57,7 +60,7 @@ fn main() {
         Some(("add", sub_matches)) => {
             let name = sub_matches.get_one::<String>("name").unwrap();
             let current_dir = std::env::current_dir().unwrap();
-            let workspaces = workspaces::load();
+            let workspaces = workspace::paths::legacy::load();
             let mut new_workspaces = workspaces.clone();
             if workspaces.iter().any(|w| &w.name == name) {
                 println!("Workspace with name {} already exists", name);
@@ -73,26 +76,29 @@ fn main() {
                 );
                 std::process::exit(1);
             }
-            new_workspaces.push(workspaces::Workspace {
+            new_workspaces.push(workspace::paths::legacy::Workspace {
                 name: name.clone(),
                 path: current_dir.to_str().unwrap().to_string(),
             });
-            workspaces::save(new_workspaces);
+            
+            workspace::paths::legacy::save(new_workspaces);
             println!("Added {} as a workspace", name);
         }
         Some(("rm", sub_matches)) => {
             let name = sub_matches.get_one::<String>("name").unwrap();
-            let workspaces = workspaces::load();
+            let workspaces = workspace::paths::legacy::load();
             if workspaces.iter().find(|w| &w.name == name).is_none() {
                 println!("Workspace with name \"{}\" doesn't exists", name);
                 std::process::exit(1);
             }
-            workspaces::save(workspaces.into_iter().filter(|w| &w.name != name).collect());
+            workspace::paths::legacy::save(
+                workspaces.into_iter().filter(|w| &w.name != name).collect(),
+            );
             println!("Remove workspace {}", name);
         }
         Some(("open", sub_matches)) => {
             let name = sub_matches.get_one::<String>("name").unwrap();
-            let workspaces = workspaces::load();
+            let workspaces = workspace::paths::legacy::load();
             let workspace = workspaces.iter().find(|w| &w.name == name);
             if workspace.is_none() {
                 println!("Workspace with name \"{}\" doesn't exists", name);

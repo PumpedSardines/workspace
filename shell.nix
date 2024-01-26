@@ -4,6 +4,7 @@ pkgs.mkShell {
   inputsFrom = [ (pkgs.callPackage ./default.nix { }) ];
   # Additional tooling
   buildInputs = with pkgs; [
+    sqlx-cli
     rust-analyzer
     rustfmt
     clippy

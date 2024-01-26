@@ -19,16 +19,7 @@
         pkgsFor = nixpkgs.legacyPackages;
       in
       {
-        packages = flakeUtils.lib.flattenTree {
-          node = pkgs.nodejs_20;
-          live-server = pkgs.nodePackages.live-server;
-        };
-        devShell = pkgs.mkShell {
-          buildInputs = with self.packages.${system}; [
-            node
-            live-server
-          ];
-        };
+        packages.default = pkgsFor.${system}.callPackage ./default.nix { };
       }
     );
 }

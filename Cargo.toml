@@ -5,8 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "workspace"
+path = "src/lib.rs"
+
 [dependencies]
 clap = { version = "4.4.11", features = ["derive"] }
 homedir = "0.2.1"
 serde = { version = "1.0.193", features = ["derive"] }
 serde_json = "1.0.108"
+sqlx = { version = "0.7.3", features = [ "runtime-tokio-rustls", "sqlite" ]  }
+tokio = { version = "1", features = ["full"] }

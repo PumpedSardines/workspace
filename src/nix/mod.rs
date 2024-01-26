@@ -1,3 +1,4 @@
+mod c;
 mod javascript;
 mod rust;
 
@@ -8,6 +9,7 @@ pub fn parse_cmd(template: &String) {
     let template = match template.as_str() {
         "rust" => rust::template(),
         "javascript" => javascript::template(),
+        "c" => c::template(),
         _ => {
             println!("Unknown template: {}", template);
             std::process::exit(1);
