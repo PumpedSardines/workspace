@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO legacy_move_data (has_moved)\n            VALUES (1)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": []
+  },
+  "hash": "bb43b4da9cbd5e27335fb9837919fe4cd21808ebd014501667fc094dac34e4e2"
+}

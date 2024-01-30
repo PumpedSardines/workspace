@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT has_moved FROM legacy_move_data\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "has_moved",
+        "ordinal": 0,
+        "type_info": "Int64"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "f568ad1ef5a7a694c062c5c256ffb7100ae4a4d2a3d238519b97af4be294cee0"
+}
