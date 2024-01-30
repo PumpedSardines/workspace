@@ -4,6 +4,8 @@ mod rust;
 
 mod template;
 
+pub const TEMPLATES: [&'static str; 3] = ["rust", "javascript", "c"];
+
 pub fn parse_cmd(template: &String) {
     let template_name = template.clone();
     let template = match template.as_str() {

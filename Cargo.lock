@@ -1595,6 +1595,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
+name = "tmux_interface"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db92951877a432e10706c6c101f9e1f8ff4ea3d92df2903ae776d84cf9ca0bce"
+
+[[package]]
 name = "tokio"
 version = "1.35.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2022,6 +2028,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sqlx",
+ "tmux_interface",
  "tokio",
 ]
 
