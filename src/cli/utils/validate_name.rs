@@ -3,5 +3,9 @@ pub fn validate_name(name: &String) -> bool {
         return false;
     }
 
-    return name.chars().filter(|c| c.is_ascii_alphabetic()).count() == name.len();
+    return name
+        .chars()
+        .filter(|c| c.is_ascii_alphabetic() || c == &'-')
+        .count()
+        == name.len();
 }
