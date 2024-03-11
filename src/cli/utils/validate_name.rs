@@ -5,7 +5,7 @@ pub fn validate_name(name: &String) -> bool {
 
     return name
         .chars()
-        .filter(|c| c.is_ascii_alphabetic() || c == &'-')
+        .filter(|c| c.is_ascii_alphabetic() || c.is_numeric() || *c == '_')
         .count()
         == name.len();
 }
