@@ -5,7 +5,16 @@ pub fn validate_name(name: &String) -> bool {
 
     return name
         .chars()
-        .filter(|c| c.is_ascii_alphabetic() || c.is_numeric() || *c == '_')
+        .filter(|c| match c {
+            'a'..='z' => true,
+            'A'..='Z' => true,
+            '0'..='9' => true,
+            '_' => true,
+            '-' => true,
+            '.' => true,
+            ',' => true,
+            _ => false,
+        })
         .count()
         == name.len();
 }
